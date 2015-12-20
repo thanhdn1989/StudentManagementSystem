@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="STMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACTION">
+          <Key>
+            <PropertyRef Name="ACTIONID" />
+          </Key>
+          <Property Name="ACTIONID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ACTIONNAME" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CLASS">
+          <Key>
+            <PropertyRef Name="CLASSID" />
+          </Key>
+          <Property Name="CLASSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CLASSCODE" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="CLASSNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PARENT">
+          <Key>
+            <PropertyRef Name="PARENTID" />
+          </Key>
+          <Property Name="PARENTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PARENTCODE" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="PARENTNUMBER" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="PARENTNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STUDENT">
+          <Key>
+            <PropertyRef Name="STUDENTID" />
+          </Key>
+          <Property Name="STUDENTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STUDENTCODE" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="STUDENTNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CLASSID" Type="int" Nullable="false" />
+          <Property Name="LASTMODIFICATION" Type="smalldatetime" />
+          <Property Name="PARENTID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TICKET">
+          <Key>
+            <PropertyRef Name="TICKETID" />
+          </Key>
+          <Property Name="TICKETID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CREATEDATE" Type="smalldatetime" Nullable="false" />
+          <Property Name="CONTENT" Type="nvarchar(max)" />
+          <Property Name="ACTIONID" Type="int" Nullable="false" />
+          <Property Name="STUDENTID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_STUDENT_CLASS">
+          <End Role="CLASS" Type="Self.CLASS" Multiplicity="1" />
+          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLASS">
+              <PropertyRef Name="CLASSID" />
+            </Principal>
+            <Dependent Role="STUDENT">
+              <PropertyRef Name="CLASSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STUDENT_PARENT">
+          <End Role="PARENT" Type="Self.PARENT" Multiplicity="1" />
+          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARENT">
+              <PropertyRef Name="PARENTID" />
+            </Principal>
+            <Dependent Role="STUDENT">
+              <PropertyRef Name="PARENTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKET_ACTION">
+          <End Role="ACTION" Type="Self.ACTION" Multiplicity="1" />
+          <End Role="TICKET" Type="Self.TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACTION">
+              <PropertyRef Name="ACTIONID" />
+            </Principal>
+            <Dependent Role="TICKET">
+              <PropertyRef Name="ACTIONID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKET_STUDENT">
+          <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="1" />
+          <End Role="TICKET" Type="Self.TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT">
+              <PropertyRef Name="STUDENTID" />
+            </Principal>
+            <Dependent Role="TICKET">
+              <PropertyRef Name="STUDENTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="STMSModelStoreContainer">
+          <EntitySet Name="ACTION" EntityType="Self.ACTION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLASS" EntityType="Self.CLASS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PARENT" EntityType="Self.PARENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STUDENT" EntityType="Self.STUDENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TICKET" EntityType="Self.TICKET" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_STUDENT_CLASS" Association="Self.FK_STUDENT_CLASS">
+            <End Role="CLASS" EntitySet="CLASS" />
+            <End Role="STUDENT" EntitySet="STUDENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STUDENT_PARENT" Association="Self.FK_STUDENT_PARENT">
+            <End Role="PARENT" EntitySet="PARENT" />
+            <End Role="STUDENT" EntitySet="STUDENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKET_ACTION" Association="Self.FK_TICKET_ACTION">
+            <End Role="ACTION" EntitySet="ACTION" />
+            <End Role="TICKET" EntitySet="TICKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKET_STUDENT" Association="Self.FK_TICKET_STUDENT">
+            <End Role="STUDENT" EntitySet="STUDENT" />
+            <End Role="TICKET" EntitySet="TICKET" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="STMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CLASS">
+          <Key>
+            <PropertyRef Name="CLASSID" />
+          </Key>
+          <Property Name="CLASSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CLASSCODE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CLASSNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="STUDENTs" Relationship="STMSModel.FK_STUDENT_CLASS" FromRole="CLASS" ToRole="STUDENT" />
+        </EntityType>
+        <EntityType Name="PARENT">
+          <Key>
+            <PropertyRef Name="PARENTID" />
+          </Key>
+          <Property Name="PARENTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PARENTCODE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PARENTNUMBER" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PARENTNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="STUDENTs" Relationship="STMSModel.FK_STUDENT_PARENT" FromRole="PARENT" ToRole="STUDENT" />
+        </EntityType>
+        <EntityType Name="STUDENT">
+          <Key>
+            <PropertyRef Name="STUDENTID" />
+          </Key>
+          <Property Name="STUDENTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STUDENTCODE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="STUDENTNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CLASSID" Type="Int32" Nullable="false" />
+          <Property Name="LASTMODIFICATION" Type="DateTime" Precision="0" />
+          <Property Name="PARENTID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLASS" Relationship="STMSModel.FK_STUDENT_CLASS" FromRole="STUDENT" ToRole="CLASS" />
+          <NavigationProperty Name="PARENT" Relationship="STMSModel.FK_STUDENT_PARENT" FromRole="STUDENT" ToRole="PARENT" />
+          <NavigationProperty Name="TICKETs" Relationship="STMSModel.FK_TICKET_STUDENT" FromRole="STUDENT" ToRole="TICKET" />
+        </EntityType>
+        <EntityContainer Name="STMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CLASSes" EntityType="Self.CLASS" />
+          <EntitySet Name="PARENTs" EntityType="Self.PARENT" />
+          <EntitySet Name="STUDENTs" EntityType="Self.STUDENT" />
+          <EntitySet Name="ACTIONs" EntityType="STMSModel.ACTION" />
+          <EntitySet Name="TICKETs" EntityType="STMSModel.TICKET" />
+          <AssociationSet Name="FK_TICKET_ACTION" Association="STMSModel.FK_TICKET_ACTION">
+            <End Role="ACTION" EntitySet="ACTIONs" />
+            <End Role="TICKET" EntitySet="TICKETs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STUDENT_CLASS" Association="STMSModel.FK_STUDENT_CLASS">
+            <End Role="CLASS" EntitySet="CLASSes" />
+            <End Role="STUDENT" EntitySet="STUDENTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STUDENT_PARENT" Association="STMSModel.FK_STUDENT_PARENT">
+            <End Role="PARENT" EntitySet="PARENTs" />
+            <End Role="STUDENT" EntitySet="STUDENTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKET_STUDENT" Association="STMSModel.FK_TICKET_STUDENT">
+            <End Role="STUDENT" EntitySet="STUDENTs" />
+            <End Role="TICKET" EntitySet="TICKETs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ACTION">
+          <Key>
+            <PropertyRef Name="ACTIONID" />
+          </Key>
+          <Property Name="ACTIONID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ACTIONNAME" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TICKETs" Relationship="STMSModel.FK_TICKET_ACTION" FromRole="ACTION" ToRole="TICKET" />
+        </EntityType>
+        <EntityType Name="TICKET">
+          <Key>
+            <PropertyRef Name="TICKETID" />
+          </Key>
+          <Property Name="TICKETID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CREATEDATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIONID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ACTION" Relationship="STMSModel.FK_TICKET_ACTION" FromRole="TICKET" ToRole="ACTION" />
+          <Property Name="STUDENTID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="STUDENT" Relationship="STMSModel.FK_TICKET_STUDENT" FromRole="TICKET" ToRole="STUDENT" />
+        </EntityType>
+        <Association Name="FK_TICKET_ACTION">
+          <End Type="STMSModel.ACTION" Role="ACTION" Multiplicity="1" />
+          <End Type="STMSModel.TICKET" Role="TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACTION">
+              <PropertyRef Name="ACTIONID" />
+            </Principal>
+            <Dependent Role="TICKET">
+              <PropertyRef Name="ACTIONID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STUDENT_CLASS">
+          <End Type="STMSModel.CLASS" Role="CLASS" Multiplicity="1" />
+          <End Type="STMSModel.STUDENT" Role="STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLASS">
+              <PropertyRef Name="CLASSID" />
+            </Principal>
+            <Dependent Role="STUDENT">
+              <PropertyRef Name="CLASSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STUDENT_PARENT">
+          <End Type="STMSModel.PARENT" Role="PARENT" Multiplicity="1" />
+          <End Type="STMSModel.STUDENT" Role="STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PARENT">
+              <PropertyRef Name="PARENTID" />
+            </Principal>
+            <Dependent Role="STUDENT">
+              <PropertyRef Name="PARENTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKET_STUDENT">
+          <End Type="STMSModel.STUDENT" Role="STUDENT" Multiplicity="1" />
+          <End Type="STMSModel.TICKET" Role="TICKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT">
+              <PropertyRef Name="STUDENTID" />
+            </Principal>
+            <Dependent Role="TICKET">
+              <PropertyRef Name="STUDENTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="STMSModelStoreContainer" CdmEntityContainer="STMSEntities">
+          <EntitySetMapping Name="CLASSes">
+            <EntityTypeMapping TypeName="STMSModel.CLASS">
+              <MappingFragment StoreEntitySet="CLASS">
+                <ScalarProperty Name="CLASSID" ColumnName="CLASSID" />
+                <ScalarProperty Name="CLASSCODE" ColumnName="CLASSCODE" />
+                <ScalarProperty Name="CLASSNAME" ColumnName="CLASSNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PARENTs">
+            <EntityTypeMapping TypeName="STMSModel.PARENT">
+              <MappingFragment StoreEntitySet="PARENT">
+                <ScalarProperty Name="PARENTID" ColumnName="PARENTID" />
+                <ScalarProperty Name="PARENTCODE" ColumnName="PARENTCODE" />
+                <ScalarProperty Name="PARENTNUMBER" ColumnName="PARENTNUMBER" />
+                <ScalarProperty Name="PARENTNAME" ColumnName="PARENTNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STUDENTs">
+            <EntityTypeMapping TypeName="STMSModel.STUDENT">
+              <MappingFragment StoreEntitySet="STUDENT">
+                <ScalarProperty Name="PARENTID" ColumnName="PARENTID" />
+                <ScalarProperty Name="STUDENTID" ColumnName="STUDENTID" />
+                <ScalarProperty Name="STUDENTCODE" ColumnName="STUDENTCODE" />
+                <ScalarProperty Name="STUDENTNAME" ColumnName="STUDENTNAME" />
+                <ScalarProperty Name="CLASSID" ColumnName="CLASSID" />
+                <ScalarProperty Name="LASTMODIFICATION" ColumnName="LASTMODIFICATION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ACTIONs">
+            <EntityTypeMapping TypeName="STMSModel.ACTION">
+              <MappingFragment StoreEntitySet="ACTION">
+                <ScalarProperty Name="ACTIONNAME" ColumnName="ACTIONNAME" />
+                <ScalarProperty Name="ACTIONID" ColumnName="ACTIONID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TICKETs">
+            <EntityTypeMapping TypeName="STMSModel.TICKET">
+              <MappingFragment StoreEntitySet="TICKET">
+                <ScalarProperty Name="STUDENTID" ColumnName="STUDENTID" />
+                <ScalarProperty Name="ACTIONID" ColumnName="ACTIONID" />
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="CREATEDATE" ColumnName="CREATEDATE" />
+                <ScalarProperty Name="TICKETID" ColumnName="TICKETID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

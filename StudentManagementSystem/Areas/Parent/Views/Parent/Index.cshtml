@@ -1,0 +1,46 @@
+﻿@model IEnumerable<StudentManagementSystem.PARENT>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PARENTCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PARENTNUMBER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PARENTNAME)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PARENTCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PARENTNUMBER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PARENTNAME)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PARENTID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PARENTID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PARENTID })
+        </td>
+    </tr>
+}
+
+</table>

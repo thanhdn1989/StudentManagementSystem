@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4cc8138662e6440bb2b761417155e3d7" Name="Diagram1">
+        <EntityTypeShape EntityType="STMSModel.CLASS" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STMSModel.PARENT" Width="1.5" PointX="3.125" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="STMSModel.STUDENT" Width="1.5" PointX="2.125" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="STMSModel.ACTION" Width="1.5" PointX="5.625" PointY="0.875" />
+        <EntityTypeShape EntityType="STMSModel.TICKET" Width="1.5" PointX="5.625" PointY="3.875" />
+        <AssociationConnector Association="STMSModel.FK_TICKET_ACTION" />
+        <AssociationConnector Association="STMSModel.FK_STUDENT_CLASS" />
+        <AssociationConnector Association="STMSModel.FK_STUDENT_PARENT" />
+        <AssociationConnector Association="STMSModel.FK_TICKET_STUDENT" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

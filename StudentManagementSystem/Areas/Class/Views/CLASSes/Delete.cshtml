@@ -1,0 +1,50 @@
+﻿@model StudentManagementSystem.CLASS
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal fade" id ="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Xóa dữ liệu lớp?</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CLASSCODE)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CLASSCODE)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CLASSNAME)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CLASSNAME)
+                        </dd>
+
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Delete" class="btn btn-default" /> |
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<StudentManagementSystem.CLASS>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    i.glyphicons.glyphicons-remove-sign {
+        font-size: 16px;
+    }
+ </style>
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="dtTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Mã lớp</th>
+            <th>Tên lớp</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+<div id="modalClass"></div>
+<script>
+    $(document).ready(function () {
+        $('#dtTable').dataTable({
+            serverSide: false,
+            processing: true,
+            deferRender: true,
+            ajax: {
+                type: 'GET',
+                url: '@Url.Action("GetClasses", "CLASSes")',
+                dataSrc: ""
+            },
+            columns: [
+                   { data: 'CLASSID' },
+                   { data: 'CLASSCODE' },
+                   { data: 'CLASSNAME' },
+                   {
+                       orderable: false,
+                       searchable: false,
+                       render: function (data, type, full, meta) {
+                           debugger;
+                           var data = full.CLASSID;
+                           return '<button type="button" class="btn btn-danger" onClick="deleteRecord('+full.CLASSID+')">Xóa</button>|' + 
+                               '<button type="button" class="btn btn-primary" onClick="editRecord(' + full.CLASSID + ')">Sửa</button>'
+                       }
+                   }
+            ]
+        });
+    })
+
+    function deleteRecord(param) {
+       debugger;
+       $.ajax({
+            type: 'GET',
+            data: { 'id': param },
+            url: '@Url.Action("Delete", "CLASSes")',
+            success: function (result) {
+                $('#modalClass').html(result)
+                $('#myModal').modal('show')
+            }
+        });
+    }
+
+    function editRecord(param) {
+        $.ajax({
+            type: 'GET',
+            data: { 'id': param },
+            url: '@Url.Action("Edit", "CLASSes")',
+            success: function (result) {
+                $('#modalClass').html(result)
+                $('#myModal').modal('show')
+            }
+        });
+    }
+</script>
